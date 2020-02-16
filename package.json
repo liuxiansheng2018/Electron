@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "electron": "^7.1.9",
+    "timer.js": "^1.0.4"
+  },
+  "name": "Electron",
+  "version": "1.0.0",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
