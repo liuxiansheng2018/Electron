@@ -12,7 +12,7 @@ function create() {
     }
   })
   if( isDEV ) { //区分线上线下环境
-    win.loadURL('http://localhost:64745')
+    win.loadURL('http://localhost:50638')
   } else {
     win.loadFile(path.resolve(__dirname, "../renderer/pages/main/index.html"))
   }
