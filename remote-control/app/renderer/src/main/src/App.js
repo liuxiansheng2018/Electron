@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import {ipcRenderer} from 'electron'
 // const {ipcRenderer} = window.require('electron'); //方法二
-
+import './peer-puppet.js'
 
 function App() {
   const [remoteCode, setRemoteCode] = useState('');
