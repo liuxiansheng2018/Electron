@@ -1,6 +1,10 @@
 // createAnswer
 //addstream
-import {desktopCapturer} from 'electron'
+import {desktopCapturer, ipcRenderer} from 'electron'
+// import EventEmitter from 'events'
+// let peer = new EventEmitter()
+
+const pc = new window.RTCPeerConnection({})
 async function getScreenStream() {
   const sources = await desktopCapturer.getSources({types: ['screen']}) //types是一个数组可用类型为 screen 和 window. 用来提取chromeMediaSourceId
   return new Promise((resolve, reject)=> {
@@ -21,12 +25,16 @@ async function getScreenStream() {
       console.error(err)
     })
   }) 
-  
 }
-const pc = new window.RTCPeerConnection({})
+
 pc.onicecandidate = function(e) {
   console.log('candidate', JSON.stringify(e.candidate))
+  ipcRenderer.send('forward', 'puppet-candidate', e.candidate)
 }
+//再去监听
+ipcRenderer.on('candidate', (e, candidate) => {
+  addIceCandidate(candidate)
+})
 
 let candidates = []
 async function addIceCandidate(candidate) {
@@ -44,7 +52,10 @@ async function addIceCandidate(candidate) {
 
 window.addIceCandidate = addIceCandidate
 
-
+ipcRenderer.on('offer', async (e, offer)=> {
+  let answer = await createAnswer (offer)
+  ipcRenderer.send('forward', 'answer', {type: answer.type, sdp: answer.sdp})
+})  
 async function createAnswer(offer) {
   let screenStream = await getScreenStream()
   pc.addStream(screenStream)

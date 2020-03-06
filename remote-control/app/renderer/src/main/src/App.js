@@ -10,20 +10,19 @@ function App() {
   const [controlText, setControlText] = useState('')
   const login = async () => {
     let code = await ipcRenderer.invoke('login')
-    
     setLocalCode(code)
-}
+  }
 
   useEffect(() => {
       login()
-      ipcRenderer.on('control-state-change', handleControlState)
+      ipcRenderer.on('control-state-change', handleControlState) //主进程到渲染进程
       return () => {
           ipcRenderer.removeListener('control-state-change', handleControlState)
       }
   }, [])
 
-  const startControl = (remoteCode) => {
-    ipcRenderer.send('control', remoteCode)
+  const startControl = (remoteCode) => { 
+    ipcRenderer.send('control', remoteCode) //渲染进程到主进程
 }
 
   const handleControlState = (e, name, type) => {

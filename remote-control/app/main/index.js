@@ -10,3 +10,4 @@ app.on('ready', ()=> {
     ipcHandleIpc()
     require('./robot.js')() //只能在主进程中运行
 })
+
