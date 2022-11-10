@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "electron": "^7.1.9",
+    "electron": "^18.3.7",
     "robotjs": "^0.6.0",
     "timer.js": "^1.0.4"
   },
